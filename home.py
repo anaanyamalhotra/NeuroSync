@@ -1,7 +1,5 @@
 import streamlit as st
 
-st.set_page_config(page_title="NeuroSync", layout="wide")
-
 def main():
     st.title("Welcome to NeuroSync 🧠")
     st.markdown("""
