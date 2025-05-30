@@ -1,7 +1,8 @@
 import streamlit as st
 
+st.set_page_config(page_title="NeuroSync", layout="wide")
+
 def main():
-    st.set_page_config(page_title="NeuroSync", layout="wide")
     st.title("Welcome to NeuroSync 🧠")
     st.markdown("""
     **NeuroSync** is your personalized Cognitive Twin Intelligence platform.
