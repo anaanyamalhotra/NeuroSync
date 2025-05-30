@@ -66,7 +66,9 @@ def main():
                     """)
 
                 else:
-                    st.error("Error generating profile. Please try again.")
+                    st.error(f"Something went wrong. Status code: {response.status_code}")
+                    st.text("Raw response:")
+                    st.json(response.json())
             except Exception as e:
                 st.error(f"Request failed: {e}")
 
