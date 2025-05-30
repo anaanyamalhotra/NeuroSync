@@ -1,8 +1,6 @@
 import streamlit as st
 import requests
 
-st.set_page_config(page_title="NeuroSync Reflection", page_icon="🧠")
-
 def main():
     st.title("🪞 Reflection Journal")
     st.markdown("Let NeuroSync help you process your thoughts with AI-powered journaling ✨")
