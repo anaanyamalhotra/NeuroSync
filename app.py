@@ -13,5 +13,7 @@ PAGES = {
 # Sidebar navigation
 st.sidebar.title("🧠 NeuroSync Navigation")
 selection = st.sidebar.radio("Go to", list(PAGES.keys()))
+
+
 module = importlib.import_module(PAGES[selection])
 module.main()
