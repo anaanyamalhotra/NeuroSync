@@ -104,8 +104,9 @@ with tab1:
                     **🎮 Game:** {profile['xbox_game']} ({profile['game_mode']})  
                     **🕒 Duration:** {profile['duration_minutes']} mins  
                     **🔄 Switch After:** {profile['switch_time']}  
-                    **🎧 Playlist:** {profile['spotify_playlist']}
                     """)
+                    st.subheader("🎧 Personalized Spotify Playlist")
+                    st.info(f"**Recommended Based on Brain Chemistry:** _{profile['spotify_playlist']}_")
                     st.subheader("🌿 Olfactory Suggestion")
                     st.markdown(f"Try using **{profile['scent_reinforcement']}** today to support your mental balance.")
 
@@ -219,8 +220,6 @@ with tab2:
                                 - **Mood Volatility (Std Dev):** {volatility}  
                                 - **Trend Over Time:** {recent_trend}  
                                 """)
-
-            
 
                     else:
                         st.error("Journal generation failed.")
