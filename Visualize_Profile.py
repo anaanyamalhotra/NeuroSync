@@ -64,6 +64,49 @@ def main():
                     ⏱️ Play for: **{profile.get("duration_minutes", "N/A")} mins**, then switch: **{profile.get("switch_time", "N/A")}**  
                     🎧 Playlist: **{profile.get("spotify_playlist", "N/A")}**
                     """)
+                    
+                    st.subheader("🔬 NeuroReflection Insights")
+                    mood_insights = []
+                    nt = profile["neurotransmitters"]
+                    if nt["dopamine"] > 0.6:
+                        mood_insights.append("You may feel energetic or reward-driven today.")
+                    if nt["cortisol"] > 0.6:
+                        mood_insights.append("Heightened cortisol suggests stress — consider grounding activities.")
+                    if nt["GABA"] < 0.4:
+                        mood_insights.append("Low GABA may reflect restlessness or low inhibition.")
+
+                    st.markdown("**🧠 Mood Interpretation:**")
+                    st.markdown("• " + "\n• ".join(mood_insights) if mood_insights else "Your neurotransmitters are balanced today.")
+
+                    # Scent recommendations
+                    st.markdown("**🌸 Scent Recommendations:**")
+                    if nt["cortisol"] > 0.6:
+                        st.markdown("- Try **lavender** or **linalool** for calming effects (boosts GABA).")
+                    elif nt["dopamine"] < 0.4:
+                        st.markdown("- Try **cinnamon** or **mint** to enhance motivation (dopamine boosters).")
+                    else:
+                        st.markdown("- Maintain balance with **vanilla** or **rose** to support oxytocin and emotional grounding.")
+
+                    # Playlist logic
+                    st.markdown("**🎵 Why this Playlist?**")
+                    playlist = profile.get("spotify_playlist", "")
+                    if "Focus" in playlist:
+                        st.markdown("- Designed to sustain attention and working memory via dopamine and serotonin pathways.")
+                    elif "Chill" in playlist:
+                        st.markdown("- Helps reduce stress and soothe heightened amygdala activity.")
+                    else:
+                        st.markdown("- Selected to match your emotional tone and neurotransmitter balance.")
+
+                    # Game strategy explanation
+                    st.markdown("**🎮 Game Strategy:**")
+                    game = profile.get("xbox_game", "the game")
+                    mode = profile.get("game_mode", "your current mode")
+                    duration = profile.get("duration_minutes", "30")
+                    switch = profile.get("switch_time", "15 mins")
+
+                    st.markdown(f"- **{game}** was selected to engage your **{mode}**-oriented mindset.")
+                    st.markdown(f"- Play for **{duration} minutes**, then switch every **{switch}** to avoid overstimulation.")
+                    st.markdown("- This pattern supports healthy **prefrontal cortex** engagement and avoids amygdala fatigue.")
 
                 else:
                     st.error(f"Something went wrong. Status code: {res.status_code}")
