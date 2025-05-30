@@ -19,15 +19,28 @@ def main():
         submitted = st.form_submit_button("Generate NeuroProfile")
 
     if submitted:
+        job_title = None
+        company = None
+        if "," in job_info:
+            parts = job_info.split(",", 1)
+            job_title = parts[0].strip()
+            company = parts[1].strip()
+        else:
+            job_title = job_info.strip()
+
         data = {
             "name": name,
             "email": email,
-            "job_info": job_info,
+            "job_title": job_title,
+            "company": company,
             "career_goals": goals,
             "productivity_limiters": stressors,
             "scent_note": favorite_scent,
             "childhood_scent": childhood_scent
         }
+
+        st.subheader("🔍 Debug: Payload being sent")
+        st.json(data)
 
         with st.spinner("Analyzing your brain chemistry..."):
             try:
