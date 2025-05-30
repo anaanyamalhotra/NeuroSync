@@ -57,6 +57,15 @@ def main():
 
                     st.subheader("Region Subvectors")
                     st.json(profile["subvectors"])
+                    
+                    st.subheader("🎮 Xbox Game & 🎵 Spotify Recommendation")
+                    st.markdown(f"""
+                    - **Recommended Game:** {profile.get("xbox_game", "N/A")}
+                    - **Game Mode:** {profile.get("game_mode", "N/A")}
+                    - **Suggested Play Duration:** {profile.get("duration_minutes", "N/A")} minutes
+                    - **Switch After:** {profile.get("switch_time", "N/A")}
+                    - **Spotify Playlist:** {profile.get("spotify_playlist", "N/A")}
+                    """)
 
                 else:
                     st.error("Error generating profile. Please try again.")
