@@ -8,21 +8,15 @@ def main():
     st.markdown("Fill out the following to generate your cognitive twin:")
 
     # Form Inputs
-    with st.form("twin_form"):
-        name = st.text_input("Name")
-        age = st.number_input("Age", min_value=0)
-        gender = st.selectbox("Gender", ["male", "female", "other"])
-        scent_note = st.text_input("Favorite Fragrance (e.g., Dior Sauvage)")
-        childhood_scent = st.text_area("Describe a vivid childhood scent memory")
-        stress_keywords = st.multiselect("Pick 2-3 stress-related keywords", ["deadline", "burnout", "exam", "overwhelmed", "lonely"])
-        email = st.text_input("Email (optional)", "")
-        job_title = st.text_input("Job Title (optional)", "")
-        company = st.text_input("Company (optional)", "")
-        career_goals = st.text_area("Career Goals (optional)", "")
-        productivity_limiters = st.text_area("Productivity Limiters (optional)", "")
-        routine_description = st.text_area("Describe your daily routine")
-        region = st.text_input("Where are you from?")
-
+    with st.form("profile_form"):
+        name = st.text_input("Please Enter Your Name (Optional)")
+        email = st.text_input("Email Address")
+        job = st.text_input("Current Job Title and Company")
+        goals = st.text_area("Brief Description of Your Career Goals")
+        stressors = st.text_area("Things That Limit Your Productivity in the Workplace")
+        favorite_scent = st.text_input("Favorite Perfume, Cologne, or Candle")
+        childhood_scent = st.text_area("Positive Association You Have with a Childhood Scent")
+    
         submitted = st.form_submit_button("Generate NeuroProfile")
 
     if submitted:
