@@ -1,8 +1,6 @@
 import streamlit as st
 import requests
 
-st.set_page_config(page_title="NeuroSync Reflection", page_icon="🧠")
-
 def main():
     st.title("🪞 Reflection Journal")
     st.markdown("Let NeuroSync help you process your thoughts with AI-powered journaling ✨")
@@ -78,6 +76,15 @@ def main():
                 journal = response.json().get("journal_entry", "🧠 I couldn't generate a reflection.")
                 st.success("Here's your reflection:")
                 st.markdown(f"💭 *{journal}*")
+                st.markdown("---")
+                st.subheader("🎮 Game & 🎧 Music Recommendations for You")
+                st.markdown(f"""
+                **Game:** {twin_data.get("xbox_game", "N/A")}  
+                **Mode:** {twin_data.get("game_mode", "N/A")}  
+                ⏱️ **Play for:** {twin_data.get("duration_minutes", "N/A")} mins  
+                🔄 **Switch after:** {twin_data.get("switch_time", "N/A")}   
+                🎧 **Playlist:** {twin_data.get("spotify_playlist", "N/A")}
+                """)
             else:
                 st.error("Something went wrong during reflection.")
         except Exception as e:
