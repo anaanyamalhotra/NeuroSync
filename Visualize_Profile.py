@@ -106,6 +106,20 @@ with tab1:
                     **🔄 Switch After:** {profile['switch_time']}  
                     **🎧 Playlist:** {profile['spotify_playlist']}
                     """)
+                    st.subheader("🌿 Olfactory Suggestion")
+                    st.markdown(f"Try using **{profile['scent_reinforcement']}** today to support your mental balance.")
+
+                    region_explanations = {
+                        "amygdala": "The amygdala helps regulate emotions and threat response. A calming scent like lavender may reduce hyperactivity here by increasing GABA and decreasing cortisol.",
+                        "prefrontal_cortex": "This region supports focus and decision-making. Energizing scents like mint or cinnamon can boost dopamine levels to aid executive function.",
+                        "hippocampus": "The hippocampus handles memory and learning. Scents like bergamot or citrus may enhance serotonin and support memory encoding.",
+                        "hypothalamus": "The hypothalamus regulates stress and hormone balance. GABA-enhancing scents like linalool may help restore calm and emotional stability."
+                    }
+
+                    lowest_region = profile.get("lowest_region", "")
+                    if lowest_region and lowest_region in region_explanations:
+                        st.subheader("🧪 NeuroScientific Insight")
+                        st.markdown(region_explanations[lowest_region])
 
                     # Store for use in reflection
                     st.session_state["profile"] = profile
