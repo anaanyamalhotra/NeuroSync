@@ -44,7 +44,7 @@ def main():
 
         with st.spinner("Analyzing your brain chemistry..."):
             try:
-                res = requests.post("https://<your-backend-url>/generate", json=data)
+                res = requests.post("https://cogniscent-backend-ygrv.onrender.com/generate", json=data)
                 if res.status_code == 200:
                     profile = res.json()
                     st.success("Cognitive Twin Generated Successfully!")
