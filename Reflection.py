@@ -17,7 +17,7 @@ def main():
             with st.spinner("Reflecting..."):
                 try:
                     response = requests.post(
-                        "http://localhost:8000/reflect",
+                        "https://cogniscent-backend-ygrv.onrender.com/reflect",
                         json={
                             "name": name,
                             "current_emotion": current_emotion,
