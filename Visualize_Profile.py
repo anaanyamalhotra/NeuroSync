@@ -105,6 +105,37 @@ with tab1:
                     **🕒 Duration:** {profile['duration_minutes']} mins  
                     **🔄 Switch After:** {profile['switch_time']}  
                     """)
+                    st.subheader("🧠 Why This Game?")
+                    from difflib import get_close_matches
+                    def find_game_entry(name):
+                        try:
+                            game_name = name.lower().strip()
+                            for g in game_profiles:
+                                if g["name"].lower() == game_name:
+                                    return g
+                            matches = get_close_matches(game_name, [g["name"].lower() for g in game_profiles], n=1)
+                            if matches:
+                                return next((g for g in game_profiles if g["name"].lower() == matches[0]), None)
+                            return None
+                        except:
+                            return None
+
+                    matched_game = find_game_entry(profile["xbox_game"])
+
+                    if matched_game:
+                        st.markdown(f"**Psychological Effects:** {', '.join(matched_game.get('psychological_effects', []))}")
+                        st.markdown(f"**Targeted Neurotransmitters:** {', '.join(matched_game.get('tags', []))}")
+                        st.markdown(f"**Brain Regions Stimulated:** {', '.join(matched_game.get('brain_region_activation', []))}")
+                        st.markdown(f"**Challenge Level:** {matched_game.get('challenge_level', 'moderate').capitalize()}")
+
+                        scent_used = profile.get("scent_note", "").lower().strip()
+                        affinity_score = matched_game.get("scent_affinity", {}).get(scent_used)
+                        if affinity_score:
+                            st.markdown(f"**🌸 Matching Scent Affinity:** {scent_used.title()} (score: {affinity_score})")
+                    if "match_reason" in profile:
+                        st.info(f"🧠 Matching Rationale: {profile['match_reason']}")
+                            
+        
                     st.subheader("🎧 Personalized Spotify Playlist")
                     st.info(f"**Recommended Based on Brain Chemistry:** _{profile['spotify_playlist']}_")
                     st.subheader("🌿 Olfactory Suggestion")
