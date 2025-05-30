@@ -11,17 +11,24 @@ st.title("🧠 NeuroSync Cognitive Twin Dashboard")
 tab1, tab2 = st.tabs(["🧬 NeuroProfile Generator", "📓 NeuroJournal Reflection"])
 
 with tab1:
+
+    with st.expander("🧭 How This Works", expanded=False):
+        st.markdown("""
+        NeuroSync creates a personalized 'Cognitive Twin' using scent preferences, career data, and stress triggers.  
+        It maps neurotransmitter activity, brain region profiles, and generates tailored game & music recommendations.
+        Just answer 7 simple questions — your mind’s mirror is one click away.
+        """)
+        
     st.markdown("Answer the 7 questions to generate your cognitive twin:")
 
     with st.form("profile_form"):
-        name = st.text_input("Please Enter Your Name (Optional)")
-        email = st.text_input("Email Address")
-        job_info = st.text_input("Current Job Title and Company")
-        goals = st.text_area("Brief Description of Your Career Goals")
-        stressors = st.text_area("What Limits Your Productivity at Work?")
-        favorite_scent = st.text_input("Favorite Perfume, Cologne, or Candle")
-        childhood_scent = st.text_area("Scent Tied to a Positive Childhood Memory")
-        submitted = st.form_submit_button("🔮 Generate Profile")
+        name = st.text_input("Please Enter Your Name", help="Used only for personalization. Not stored.")
+        email = st.text_input("Email Address", help="Required for journaling. Not shared.")
+        job_info = st.text_input("Current Job Title and Company", help="E.g., 'Student, University of X' or 'Engineer, Microsoft'")
+        goals = st.text_area("Career Goals", help="What do you aim to achieve professionally?")
+        stressors = st.text_area("Workplace Limiters", help="What affects your productivity or focus?")
+        favorite_scent = st.text_input("Favorite Perfume/Candle", help="Used to stimulate neurotransmitter modeling.")
+        childhood_scent = st.text_area("Positive Scent Memory", help="Recall a scent from childhood with emotional value.")
 
     if submitted:
         job_title = None
@@ -112,6 +119,13 @@ with tab1:
                 st.error(f"Request failed: {e}")
 
 with tab2:
+    with st.expander("📓 How Reflections Work", expanded=False):
+        st.markdown("""
+        Your cognitive twin powers this journaling system. 
+        Based on your brain chemistry, we help you process emotions and uncover patterns.
+        Reflect regularly to see mood trends and track cognitive wellness over time.
+        """)
+
     if "emotion_timeline" not in st.session_state:
         st.session_state["emotion_timeline"] = []
     if "feedback_log" not in st.session_state:
@@ -123,9 +137,9 @@ with tab2:
         st.warning("⚠️ Please generate your Cognitive Twin in Tab 1 first.")
     else:
         with st.form("reflection_form"):
-            mood = st.text_input("How are you feeling today?")
-            events = st.text_area("Briefly describe recent events or triggers:")
-            goals = st.text_area("What are your short-term or long-term goals?")
+            mood = st.text_input("Current Mood", help="How do you feel right now?")
+            events = st.text_area("Recent Events", help="Describe events or stressors influencing your day.")
+            goals = st.text_area("Your Goals", help="Short or long-term goals you want to focus on.")
             reflect_submit = st.form_submit_button("🧠 Generate Journal Entry")
 
         if reflect_submit:
@@ -161,8 +175,39 @@ with tab2:
                         feedback = st.slider("Rate this reflection (0 = Not helpful, 5 = Very helpful)", 0, 5, 3)
                         st.session_state["feedback_log"].append(feedback)
                         st.markdown(f"✅ Logged mood score: **{normalized_score}**, Feedback: **{feedback}**")
+                        import pandas as pd
+                        from io import BytesIO
+                        if st.session_state["emotion_timeline"] and st.session_state["feedback_log"]:
+                            df_log = pd.DataFrame({
+                                "Timestamp": pd.date_range(end=pd.Timestamp.now(), periods=len(st.session_state["emotion_timeline"]), freq="T"),
+                                "Mood Score": st.session_state["emotion_timeline"],
+                                "Feedback": st.session_state["feedback_log"]
+                            })
+                            st.subheader("🧾 Download Mood & Feedback History")
+                            buffer = BytesIO()
+                            df_log.to_csv(buffer, index=False)
+                            buffer.seek(0)
+                            st.download_button(
+                                label="📥 Download Log as CSV",
+                                data=buffer,
+                                file_name="neuro_journal_log.csv",
+                                mime="text/csv"
+                            )
+                            import numpy as np
+                            if st.session_state["emotion_timeline"]:
+                                scores = np.array(st.session_state["emotion_timeline"])
+                                volatility = round(np.std(scores), 2)
+                                avg_score = round(np.mean(scores), 2)
+                                recent_trend = "📈 Improving" if scores[-1] > scores[0] else "📉 Declining"
+                                st.subheader("📊 Mood Summary Analytics")
+                                st.markdown(f"""
+                                - **Average Mood Score:** {avg_score}  
+                                - **Mood Volatility (Std Dev):** {volatility}  
+                                - **Trend Over Time:** {recent_trend}  
+                                """)
 
-                    
+            
+
                     else:
                         st.error("Journal generation failed.")
                         st.json(res.json())
