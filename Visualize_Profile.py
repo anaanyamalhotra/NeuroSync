@@ -66,9 +66,9 @@ def main():
                     """)
 
                 else:
-                    st.error(f"Something went wrong. Status code: {response.status_code}")
+                    st.error(f"Something went wrong. Status code: {res.status_code}")
                     st.text("Raw response:")
-                    st.json(response.json())
+                    st.json(res.json())
             except Exception as e:
                 st.error(f"Request failed: {e}")
 
