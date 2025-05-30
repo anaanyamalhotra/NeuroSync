@@ -6,8 +6,8 @@ st.set_page_config(page_title="NeuroSync", layout="wide")
 # Map sidebar titles to file/module names (without .py)
 PAGES = {
     "🏠 Home": "home",
-    "🧬 Visualize NeuroProfile": "visualize_profile",
-    "🪞 Reflection Journal": "reflection"
+    "🧬 Visualize NeuroProfile": "Visualize_Profile",
+    "🪞 Reflection Journal": "Reflection"
 }
 
 # Sidebar navigation
