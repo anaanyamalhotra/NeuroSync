@@ -27,6 +27,8 @@ def main():
                     )
                     if response.status_code == 200:
                         journal = response.json().get("journal_entry", "")
+                        if not journal:
+                            journal = "🧠 I couldn't generate a reflection right now. Please try again in a bit."
                         st.success("Here's your reflection:")
                         st.markdown(f"💭 *{journal}*")
                     else:
