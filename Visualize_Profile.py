@@ -57,6 +57,38 @@ with tab1:
                     st.subheader("Brain Region Scores")
                     st.bar_chart(profile["brain_regions"])
 
+                    weights = {
+                    "dopamine": 0.25,
+                    "serotonin": 0.25,
+                    "oxytocin": 0.2,
+                    "GABA": 0.2,
+                    "cortisol": -0.15
+
+                    }
+                    nt = profile["neurotransmitters"]
+                    mood_score = sum(nt.get(k, 0) * w for k, w in weights.items())
+                    mood_score = max(0, min(1, mood_score)) * 100
+                    mood_score = round(mood_score, 1)
+                    st.subheader("🧠 Mood Score")
+                    st.metric(label="Mood Balance Score", value=f"{mood_score}/100")
+                    thermometer = go.Figure(go.Indicator(
+                        mode="gauge+number",
+                        value=mood_score,
+                        title={"text": "Mood Thermometer"},
+                        gauge={
+                            "axis": {"range": [0, 100]},
+                            "bar": {"color": "deepskyblue"},
+                            "steps": [
+                                {"range": [0, 40], "color": "lightcoral"},
+                                {"range": [40, 70], "color": "khaki"},
+                                {"range": [70, 100], "color": "lightgreen"},
+                            ],
+                        }
+                    ))
+                    st.plotly_chart(thermometer)
+
+                    
+
                     st.subheader("Subvector Functions")
                     st.json(profile["subvectors"])
 
@@ -80,6 +112,10 @@ with tab1:
                 st.error(f"Request failed: {e}")
 
 with tab2:
+    if "emotion_timeline" not in st.session_state:
+        st.session_state["emotion_timeline"] = []
+    if "feedback_log" not in st.session_state:
+        st.session_state["feedback_log"] = []
     st.subheader("📝 NeuroJournal Daily Reflection")
     st.markdown("Use your brain chemistry to generate a personal check-in journal entry.")
 
@@ -113,6 +149,20 @@ with tab2:
                         st.success("Journal Entry Generated!")
                         st.markdown("#### 🧘 Here's your reflection:")
                         st.markdown(f"> {entry}")
+                        mood_keywords = reflection_payload["current_emotion"].lower().split()
+                        positive_words = ["happy", "hopeful", "excited", "motivated"]
+                        negative_words = ["anxious", "sad", "tired", "overwhelmed"]
+                        score = sum(1 for w in mood_keywords if w in positive_words) - sum(1 for w in mood_keywords if w in negative_words)
+                        normalized_score = round((score + 3) / 6, 2) 
+                        st.session_state["emotion_timeline"].append(normalized_score)
+                        st.subheader("📈 Mood Timeline")
+                        st.line_chart(st.session_state["emotion_timeline"])
+                        st.subheader("🗣️ How helpful was this reflection?")
+                        feedback = st.slider("Rate this reflection (0 = Not helpful, 5 = Very helpful)", 0, 5, 3)
+                        st.session_state["feedback_log"].append(feedback)
+                        st.markdown(f"✅ Logged mood score: **{normalized_score}**, Feedback: **{feedback}**")
+
+                    
                     else:
                         st.error("Journal generation failed.")
                         st.json(res.json())
