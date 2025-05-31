@@ -2,6 +2,9 @@ import streamlit as st
 import requests
 import plotly.graph_objects as go
 
+st.cache_data.clear()
+st.cache_resource.clear()
+
 backend_url = "https://cogniscent-backend-ygrv.onrender.com"
 
 st.set_page_config(page_title="NeuroSync Profile", layout="centered")
