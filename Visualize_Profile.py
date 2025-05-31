@@ -29,7 +29,7 @@ with tab1:
         stressors = st.text_area("Workplace Limiters", help="What affects your productivity or focus?")
         favorite_scent = st.text_input("Favorite Perfume/Candle", help="Used to stimulate neurotransmitter modeling.")
         childhood_scent = st.text_area("Positive Scent Memory", help="Recall a scent from childhood with emotional value.")
-
+        submitted = st.form_submit_button("🧠 Generate Cognitive Twin")
     if submitted:
         job_title = None
         company = None
