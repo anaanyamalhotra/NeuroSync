@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import plotly.graph_objects as go
+from difflib import get_close_matches
 
 st.cache_data.clear()
 st.cache_resource.clear()
@@ -125,7 +126,7 @@ with tab1:
                     **🔄 Switch After:** {profile['switch_time']}  
                     """)
                     st.subheader("🧠 Why This Game?")
-                    from difflib import get_close_matches
+                    
                     def find_game_entry(name):
                         try:
                             game_name = name.lower().strip()
