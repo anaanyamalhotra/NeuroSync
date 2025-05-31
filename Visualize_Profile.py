@@ -54,6 +54,15 @@ with tab1:
         with st.spinner("Analyzing your brain chemistry..."):
             try:
                 res = requests.post(f"{backend_url}/generate", json=data)
+                st.write("DEBUG — HTTP status code:", res.status_code)
+                try:
+                    profile = res.json()
+                    st.write("DEBUG — parsed JSON from /generate:", profile)
+                except Exception:
+                    st.write("DEBUG — response was not valid JSON. Raw text:")
+                    st.text(res.text)
+                    return
+                
                 if res.status_code == 200:
                     profile = res.json()
                     if profile.get("status") == "error":
