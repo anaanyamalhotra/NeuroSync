@@ -1,7 +1,4 @@
 import streamlit as st
-
-st.set_page_config(page_title="NeuroSync Profile", layout="centered")
-
 import requests
 import plotly.graph_objects as go
 from difflib import get_close_matches
