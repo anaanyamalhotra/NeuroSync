@@ -271,7 +271,7 @@ def main():
                         "work_env": profile.get("work_env", "general_consumer"),
                         "email_style_score": profile.get("email_style_score", 0),
                         "name_email_aligned": profile.get("name_email_aligned", False)
-                    },
+                    }),
                     "xbox_game": profile.get("xbox_game") or "Unknown",
                     "game_mode": profile.get("game_mode") or "Solo",
                     "duration_minutes": int(profile.get("duration_minutes") or 20),
