@@ -179,7 +179,10 @@ with tab1:
 
                 else:
                     st.error("API error.")
-                    st.json(res.json())
+                    try:
+                        st.json(res.json())
+                    except Exception:
+                        st.text(res.text)
 
             except Exception as e:
                 st.error(f"Request failed: {e}")
