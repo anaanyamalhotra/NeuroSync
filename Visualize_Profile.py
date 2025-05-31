@@ -211,6 +211,33 @@ def main():
                     st.markdown(f"Try using **{profile['scent_reinforcement']}** today to support your mental balance.")
                     st.subheader("🕒 Circadian Rhythm & Scent Guidance")
 
+                    if "memory_scent_profile" in profile:
+                        st.subheader("🧸 Childhood Memory Scent Profile")
+                        memory = profile["memory_scent_profile"]
+                        st.markdown(f"**Memory Description:** {memory.get('memory_text', 'N/A')}")
+                        scent_notes = memory.get("scent_notes", [])
+                        if scent_notes:
+                            st.markdown("**👃 Scent Notes Extracted:**")
+                            st.markdown(" | ".join([f"`{note}`" for note in scent_notes]))
+                        nt_map = memory.get("neuro_map", {})
+                        nt_freq = {}
+                        for nt, notes in nt_map.items():
+                            nt_freq[nt.capitalize()] = len(notes)
+                        if nt_freq:
+                            st.markdown("**🧠 Neurotransmitter Associations:**")
+                            nt_df = pd.DataFrame({
+                                "Neurotransmitter": list(nt_freq.keys()),
+                                "Associated Notes Count": list(nt_freq.values())
+                            })
+                            st.bar_chart(nt_df.set_index("Neurotransmitter"))
+                        linked = memory.get("linked_regions", [])
+                        if linked:
+                            st.markdown("**🧬 Brain Regions Involved:**")
+                            st.markdown(" | ".join([f"🧩 **{region}**" for region in linked]))
+
+                    
+                    
+
                     circadian_window = profile.get("circadian_window", "")
                     user_scent = profile.get("scent_note", "").lower().strip()
                     daytime_scents = ["citrus", "mint", "bergamot", "linalool"]
