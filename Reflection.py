@@ -2,7 +2,6 @@ import streamlit as st
 import requests
 import datetime
 
-st.set_page_config(page_title="NeuroSync Reflection", page_icon="🧠")
 
 def main():
     st.title("🪞 Reflection Journal")
