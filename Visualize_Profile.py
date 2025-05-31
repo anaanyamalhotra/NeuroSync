@@ -78,6 +78,31 @@ def main():
                         st.write(profile)
                         return
 
+                    st.session_state["profile"] = profile
+                    def show_sentiment_bar(label, score):
+                        if score > 0.3:
+                            status = "Positive 😄"
+                            color = "green"
+                        elif score < -0.3:
+                            status = "Negative 😟"
+                            color = "red"
+                        else:
+                            status = "Neutral 😐"
+                            color = "orange"
+                        st.markdown(f"**{label} Sentiment:** {status}")
+                        st.progress((score + 1) / 2)
+                    goals_sentiment = profile.get("goals_sentiment", 0)
+                    stressors_sentiment = profile.get("stressors_sentiment", 0)
+
+                    st.subheader("💬 Sentiment Analysis")
+                    show_sentiment_bar("Career Goals", goals_sentiment)
+                    show_sentiment_bar("Productivity Limiters", stressors_sentiment)
+
+                    st.session_state["twin_data"] = profile
+                    st.session_state["name"] = name
+                    st.session_state["circadian_window"] = profile.get("circadian_window", "")
+                    st.session_state["circadian_note"] = profile.get("circadian_note", [])
+
                     st.success("Cognitive Twin Generated Successfully!")
                     st.subheader("Neurotransmitter Levels")
                     st.json(profile["neurotransmitters"])
@@ -196,6 +221,7 @@ def main():
                     st.session_state["profile"] = profile
                     st.session_state["twin_data"] = profile
                     st.session_state["name"] = name
+                    st.session_state["circadian_window"] = profile.get("circadian_window", "")
 
                 except Exception as e:
                     st.error(f"Request failed: {e}")
@@ -264,6 +290,7 @@ def main():
                                 "Timestamp": pd.date_range(end=pd.Timestamp.now(), periods=len(st.session_state["emotion_timeline"]), freq="T"),
                                 "Mood Score": st.session_state["emotion_timeline"],
                                 "Feedback": st.session_state["feedback_log"]
+                                "Circadian Window": [st.session_state.get("circadian_window", "")] * len(st.session_state["emotion_timeline"])
                             })
 
                             st.subheader("🧾 Download Mood & Feedback History")
