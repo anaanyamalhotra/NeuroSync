@@ -56,6 +56,9 @@ with tab1:
                 res = requests.post(f"{backend_url}/generate", json=data)
                 if res.status_code == 200:
                     profile = res.json()
+                    if profile.get("status") == "error":
+                        st.error(f"❌ Server Error: {profile.get('message', 'Unknown issue.')}")
+                        return
                     if "neurotransmitters" not in profile:
                         st.error("❌ Backend did not return neurotransmitter data. Please check inputs or try again.")
                         st.write("DEBUG profile received from backend:", profile)
