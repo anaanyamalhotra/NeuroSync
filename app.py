@@ -7,7 +7,7 @@ st.set_page_config(page_title="NeuroSync", layout="wide")
 PAGES = {
     "🏠 Home": "home",
     "🧬 Visualize NeuroProfile": "Visualize_Profile",
-    "🪞 Reflection Journal": "Reflection"
+    
 }
 
 # Sidebar navigation
