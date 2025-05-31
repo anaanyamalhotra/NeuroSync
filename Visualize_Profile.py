@@ -119,6 +119,10 @@ def main():
                     st.session_state["circadian_note"] = profile.get("circadian_note", [])
 
                     st.success("Cognitive Twin Generated Successfully!")
+                    if "cognitive_focus" in profile:
+                        st.subheader("🧠 Cognitive Focus")
+                        st.markdown(f"**Primary Cognitive Role Based on Brain Activity:** _{profile['cognitive_focus']}_")
+                        
                     st.subheader("Neurotransmitter Levels")
                     st.json(profile["neurotransmitters"])
                     if "circadian_window" in profile or "circadian_note" in profile:
