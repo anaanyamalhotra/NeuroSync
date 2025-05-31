@@ -155,6 +155,7 @@ with tab1:
 
                     # Store for use in reflection
                     st.session_state["profile"] = profile
+                    st.session_state["twin_data"] = profile 
                     st.session_state["name"] = name
 
                 else:
