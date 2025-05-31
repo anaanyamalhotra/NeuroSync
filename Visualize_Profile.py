@@ -251,16 +251,22 @@ def main():
                 reflect_submit = st.form_submit_button("🧠 Generate Journal Entry")
 
             if reflect_submit:
+                profile = st.session_state["profile"]
                 payload = {
                     "name": st.session_state["name"],
                     "current_emotion": mood,
                     "recent_events": events,
                     "goals": goals,
-                    "neurotransmitters": st.session_state["profile"]["neurotransmitters"],
-                    "xbox_game": st.session_state["profile"]["xbox_game"],
-                    "game_mode": st.session_state["profile"]["game_mode"],
-                    "duration_minutes": st.session_state["profile"]["duration_minutes"],
-                    "switch_time": st.session_state["profile"]["switch_time"]
+                    "neurotransmitters": {
+                        **profile["neurotransmitters"],
+                        "work_env": profile.get("work_env", "general_consumer"),
+                        "email_style_score": profile.get("email_style_score", 0),
+                        "name_email_aligned": profile.get("name_email_aligned", False)
+                    },
+                    "xbox_game": profile["xbox_game"],
+                    "game_mode": profile["game_mode"],
+                    "duration_minutes": profile["duration_minutes"],
+                    "switch_time": profile["switch_time"]
                 }
 
                 with st.spinner("Crafting your personalized journal..."):
