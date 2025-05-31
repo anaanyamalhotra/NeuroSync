@@ -9,7 +9,7 @@ def main():
     st.markdown("Let NeuroSync help you process your thoughts with AI-powered journaling ✨")
 
     # Load prior twin
-    twin_data = st.session_state.get("twin_data")
+    twin_data = st.session_state.get("profile")
     journal_history = st.session_state.get("journal_history", [])
 
     if not twin_data:
