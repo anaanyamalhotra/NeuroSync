@@ -262,20 +262,20 @@ def main():
             if reflect_submit:
                 profile = st.session_state["profile"]
                 payload = {
-                    "name": st.session_state["name"],
-                    "current_emotion": mood,
-                    "recent_events": events,
-                    "goals": goals,
-                    "neurotransmitters": {
-                        **profile["neurotransmitters"],
+                    "name": st.session_state.get("name", "Anonymous") or "Anonymous",
+                    "current_emotion": mood or "Neutral",
+                    "recent_events": events or "None",
+                    "goals": goals or "None",
+                    "neurotransmitters": sanitize_neuro({
+                        **profile.get("neurotransmitters", {}),
                         "work_env": profile.get("work_env", "general_consumer"),
                         "email_style_score": profile.get("email_style_score", 0),
                         "name_email_aligned": profile.get("name_email_aligned", False)
                     },
-                    "xbox_game": profile["xbox_game"],
-                    "game_mode": profile["game_mode"],
-                    "duration_minutes": profile["duration_minutes"],
-                    "switch_time": profile["switch_time"]
+                    "xbox_game": profile.get("xbox_game") or "Unknown",
+                    "game_mode": profile.get("game_mode") or "Solo",
+                    "duration_minutes": int(profile.get("duration_minutes") or 20),
+                    "switch_time": profile.get("switch_time") or "After 20 mins"
                 }
 
                 with st.spinner("Crafting your personalized journal..."):
