@@ -41,30 +41,25 @@ def main():
 
         try:
             res = requests.post("https://cogniscent-backend-ygrv.onrender.com/reflect", json=reflect_payload)
+            res.raise_for_status()
+            journal = res.json().get("journal_entry", "🧠 I couldn't generate a reflection.")
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            entry = f"[{timestamp}]\n{journal}"
+            journal_history.append(entry)
+            st.session_state["journal_history"] = journal_history
+            st.success("Here's your reflection:")
+            st.markdown(f"💭 *{journal}*")
 
-            if res.status_code == 200:
-                journal = res.json().get("journal_entry", "🧠 I couldn't generate a reflection.")
-                timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                entry = f"[{timestamp}]\n{journal}"
-                journal_history.append(entry)
-                st.session_state["journal_history"] = journal_history
-                st.success("Here's your reflection:")
-                st.markdown(f"💭 *{journal}*")
+            st.download_button(
+                label="📥 Download Reflection",
+                data=entry,
+                file_name=f"{name.replace(' ', '_')}_reflection.txt",
+                mime="text/plain"
+            )
 
-                # Export option
-                st.download_button(
-                    label="📥 Download Reflection",
-                    data=entry,
-                    file_name=f"{name.replace(' ', '_')}_reflection.txt",
-                    mime="text/plain"
-                )
+        except requests.exceptions.RequestException as e:
+            st.error(f"Request failed: {e}")
 
-            else:
-                st.error("Failed to generate reflection.")
-                st.text(res.text)
-
-        except Exception as e:
-            st.error(f"Request error: {e}")
 
     # Show history
     if journal_history:
