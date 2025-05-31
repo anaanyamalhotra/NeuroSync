@@ -1,4 +1,7 @@
 import streamlit as st
+
+st.set_page_config(page_title="NeuroSync Profile", layout="centered")
+
 import requests
 import plotly.graph_objects as go
 from difflib import get_close_matches
@@ -18,7 +21,6 @@ def main():
 
     backend_url = "https://cogniscent-backend-ygrv.onrender.com"
 
-    st.set_page_config(page_title="NeuroSync Profile", layout="centered")
     st.title("🧠 NeuroSync Cognitive Twin Dashboard")
 
     tab1, tab2 = st.tabs(["🧬 NeuroProfile Generator", "📓 NeuroJournal Reflection"])
