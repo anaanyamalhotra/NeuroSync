@@ -8,6 +8,15 @@ import pandas as pd
 import numpy as np
 from io import BytesIO
 
+def sanitize_neuro(nt_dict):
+    clean_nt = {}
+    for k, v in nt_dict.items():
+        try:
+            clean_nt[k] = float(v)
+        except (ValueError, TypeError):
+            clean_nt[k] = 0.5  # default fallback
+    return clean_nt
+    
 # === Load game profile database ===
 with open(os.path.join(os.path.dirname(__file__), "game_profiles.json"), "r") as f:
     game_profiles = json.load(f)
