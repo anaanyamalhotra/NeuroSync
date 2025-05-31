@@ -33,7 +33,6 @@ def main():
             "recent_events": recent_events,
             "goals": goals,
             "neurotransmitters": twin_data["neurotransmitters"],
-            st.write("DEBUG twin_data:", twin_data)
             "xbox_game": twin_data["xbox_game"],
             "game_mode": twin_data["game_mode"],
             "duration_minutes": twin_data["duration_minutes"],
