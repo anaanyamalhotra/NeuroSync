@@ -2,6 +2,12 @@ import streamlit as st
 import requests
 import plotly.graph_objects as go
 from difflib import get_close_matches
+import json
+import os
+
+with open(os.path.join(os.path.dirname(__file__), "game_profiles.json"), "r") as f:
+    game_profiles = json.load(f)
+
 
 st.cache_data.clear()
 st.cache_resource.clear()
