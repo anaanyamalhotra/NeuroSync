@@ -81,6 +81,16 @@ def main():
                     st.success("Cognitive Twin Generated Successfully!")
                     st.subheader("Neurotransmitter Levels")
                     st.json(profile["neurotransmitters"])
+                    if "circadian_window" in profile or "circadian_note" in profile:
+                        st.subheader("🌅 Circadian Insight")
+                        circadian_window = profile.get("circadian_window", "Not detected").title()
+                        circadian_notes = profile.get("circadian_note", [])
+                        st.markdown(f"**Activity Window Detected:** {circadian_window}")
+                        if circadian_notes:
+                            for note in circadian_notes:
+                                st.markdown(f"✅ {note}")
+                        else:
+                            st.markdown("No circadian disruption detected.")
 
                     st.subheader("Brain Region Scores")
                     st.bar_chart(profile["brain_regions"])
@@ -113,6 +123,9 @@ def main():
                         }
                     ))
                     st.plotly_chart(thermometer)
+                    circadian_window = profile.get("circadian_window", "").lower()
+                    if "evening" in circadian_window and mood_score < 50:
+                        st.warning("🕒 You may be reflecting late in the day with a low mood score — try adjusting routines to align with circadian rhythms.")
 
                     st.subheader("Subvector Functions")
                     st.json(profile["subvectors"])
@@ -156,6 +169,17 @@ def main():
 
                     st.subheader("🌿 Olfactory Suggestion")
                     st.markdown(f"Try using **{profile['scent_reinforcement']}** today to support your mental balance.")
+                    st.subheader("🕒 Circadian Rhythm & Scent Guidance")
+
+                    circadian_window = profile.get("circadian_window", "")
+                    user_scent = profile.get("scent_note", "").lower().strip()
+                    daytime_scents = ["citrus", "mint", "bergamot", "linalool"]
+                    nighttime_scents = ["lavender", "rose", "vanilla", "tonka bean"]
+
+                    if circadian_window == "morning" and user_scent in nighttime_scents:
+                        st.info("🌞 Morning tip: Your chosen scent may be better suited for evening relaxation. Try energizing options like citrus or mint.")
+                    elif circadian_window == "evening" and user_scent in daytime_scents:
+                        st.info("🌙 Evening tip: Your chosen scent is stimulating. For better sleep-wake rhythm, try calming scents like lavender or vanilla.")
 
                     region_explanations = {
                         "amygdala": "Lavender may reduce hyperactivity here by increasing GABA and decreasing cortisol.",
