@@ -47,6 +47,11 @@ def main():
             job_info = st.text_input("Current Job Title and Company", help="E.g., 'Student, University of X'")
             goals = st.text_area("Career Goals")
             stressors = st.text_area("Workplace Limiters")
+            assigned_sex = st.selectbox(
+                "What Sex Were You Assigned at Birth?",
+                ["Prefer not to say", "Female", "Male"],
+                help="Used only to calibrate scent and emotional sensitivity. Not stored."
+            )
             favorite_scent = st.text_input("Favorite Perfume/Candle")
             childhood_scent = st.text_area("Positive Scent Memory")
             submitted = st.form_submit_button("🧠 Generate Cognitive Twin")
@@ -67,7 +72,8 @@ def main():
                 "career_goals": goals,
                 "productivity_limiters": stressors,
                 "scent_note": favorite_scent,
-                "childhood_scent": childhood_scent
+                "childhood_scent": childhood_scent,
+                "assigned_sex": assigned_sex.lower() if assigned_sex != "Prefer not to say" else "unspecified"
             }
 
             with st.spinner("Analyzing your brain chemistry..."):
@@ -272,6 +278,7 @@ def main():
                         "email_style_score": profile.get("email_style_score", 0),
                         "name_email_aligned": profile.get("name_email_aligned", False)
                     }),
+            
                     "xbox_game": profile.get("xbox_game") or "Unknown",
                     "game_mode": profile.get("game_mode") or "Solo",
                     "duration_minutes": int(profile.get("duration_minutes") or 20),
