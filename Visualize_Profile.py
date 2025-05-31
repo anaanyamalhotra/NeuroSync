@@ -22,6 +22,11 @@ def main():
 
     tab1, tab2 = st.tabs(["🧬 NeuroProfile Generator", "📓 NeuroJournal Reflection"])
 
+    use_case = st.selectbox("🧠 Choose Use Case Mode", [
+    "🎮 Xbox Emotional AI (Current)",
+    "📚 Memory-NLP Twin"
+    ])
+
     with tab1:
         with st.expander("🧭 How This Works", expanded=False):
             st.markdown("""
