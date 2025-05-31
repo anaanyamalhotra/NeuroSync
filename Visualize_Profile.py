@@ -56,6 +56,10 @@ with tab1:
                 res = requests.post(f"{backend_url}/generate", json=data)
                 if res.status_code == 200:
                     profile = res.json()
+                    if "neurotransmitters" not in profile:
+                        st.error("❌ Backend did not return neurotransmitter data. Please check inputs or try again.")
+                        st.write("DEBUG profile received from backend:", profile)
+                        return
                     st.success("Cognitive Twin Generated Successfully!")
 
                     st.subheader("Neurotransmitter Levels")
