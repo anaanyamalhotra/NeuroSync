@@ -289,7 +289,7 @@ def main():
                             df_log = pd.DataFrame({
                                 "Timestamp": pd.date_range(end=pd.Timestamp.now(), periods=len(st.session_state["emotion_timeline"]), freq="T"),
                                 "Mood Score": st.session_state["emotion_timeline"],
-                                "Feedback": st.session_state["feedback_log"]
+                                "Feedback": st.session_state["feedback_log"],
                                 "Circadian Window": [st.session_state.get("circadian_window", "")] * len(st.session_state["emotion_timeline"])
                             })
 
