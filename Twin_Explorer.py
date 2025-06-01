@@ -41,7 +41,9 @@ def main():
             return
 
         df = pd.DataFrame(twins)
-        df["timestamp"] = pd.to_datetime(df["timestamp"])
+        if "timestamp" not in df.columns:
+            df["timestamp"] = "unknown"
+        df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
         df = df.sort_values(by="timestamp", ascending=False)
 
         st.success(f"Loaded {len(df)} matching twins")
