@@ -137,7 +137,8 @@ def main():
                             st.markdown("No circadian disruption detected.")
 
                     st.subheader("Brain Region Scores")
-                    st.bar_chart(profile["brain_regions"])
+                    brain_region_df = pd.DataFrame.from_dict(profile["brain_regions"], orient="index", columns=["Score"])
+                    st.bar_chart(brain_region_df)
 
                     weights = {
                         "dopamine": 0.25,
