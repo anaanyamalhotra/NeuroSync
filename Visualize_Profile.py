@@ -124,7 +124,7 @@ def main():
                         st.markdown(f"**Focus:** {profile['cognitive_focus']}")
                         st.markdown("**Confidence Level:**")
                         st.progress(profile.get("cognitive_focus_confidence", 50))
-                        st.markdown(f"**Dominant Brain Region:** `{profile.get('dominant_region', 'Unknown')}`")
+                        st.markdown(f"**Dominant Brain Region:** `{profile.get('dominant_region')}`")
                         focus_explanation = {
                             "💓 Emotional Analyst": "Strong emotional regulation and empathy, likely high oxytocin/amygdala activity.",
                             "📚 Memory-Oriented Thinker": "Excellent at recalling and organizing complex information.",
