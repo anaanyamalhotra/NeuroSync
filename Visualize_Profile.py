@@ -39,7 +39,7 @@ def main():
             Just answer 7 simple questions — your mind’s mirror is one click away.
             """)
 
-        st.markdown("Answer the 7 questions to generate your cognitive twin:")
+        st.markdown("Answer the 8 questions to generate your cognitive twin:")
 
         with st.form("profile_form"):
             name = st.text_input("Please Enter Your Name", help="Used only for personalization. Not stored.")
