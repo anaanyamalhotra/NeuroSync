@@ -1,23 +1,38 @@
 import streamlit as st
 
 def main():
+    st.set_page_config(page_title="NeuroSync 🧠", layout="centered")
     st.title("Welcome to NeuroSync 🧠")
+
     st.markdown("""
-    **NeuroSync** is your personalized Cognitive Twin Intelligence platform.
+    **NeuroSync** is your interactive Cognitive Twin Intelligence platform — powered by neuroscience, olfactory memory, and emotional AI.
 
-    🧬 Understand your unique brain chemistry
-    🎮 Get neuroscience-backed game, scent, and music recommendations
-    🪞 Reflect with GPT-powered journaling
+    ### 🌟 What You Can Do:
+    - 🧬 **Generate Your Cognitive Twin**: Based on scent preferences, career goals, and stress patterns
+    - 🎮 **Get Xbox Game Recommendations**: Curated using your dominant neurotransmitter profile
+    - 🎧 **Explore Spotify Playlists**: Tailored to your mood and brain chemistry
+    - 📓 **Journal with GPT-4**: Reflect on your emotional state using AI-guided insights
+    - 🧠 **Visualize Your Brain**: See how your amygdala, hippocampus, and hypothalamus respond
 
-    ### 🧠 How it works:
-    - We analyze your scent memory, stress triggers, routines, and personal goals
-    - This creates a "neuroprofile" based on five key neurotransmitters
-    - Your brain regions are mapped and interpreted for insight & feedback
+    ### 🧠 How It Works:
+    We analyze your responses across 7 personalized questions, including:
+    - Childhood scent memories
+    - Favorite perfumes and stressors
+    - Career aspirations and daily habits
 
-    👉 Use the sidebar to begin:
-    - Visualize your neuroprofile
-    - Try AI journaling for reflection
-    """)
+    These are translated into:
+    - A 5-point neurotransmitter map: `dopamine`, `serotonin`, `GABA`, `oxytocin`, `cortisol`
+    - Brain region sub-vectors
+    - Personalized Xbox + music suggestions
+    - A reflection-ready mood profile
+
+    ---
+    👉 Use the **sidebar tabs** to:
+    - 🧬 Generate or explore your twin under **NeuroProfile Generator**
+    - 📓 Reflect in **NeuroJournal Reflection**
+    - 📊 Dive into brain chemistry in **Twin Explorer**
+
+    """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
