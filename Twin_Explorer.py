@@ -34,7 +34,7 @@ def main():
     try:
         res = requests.get(f"{BACKEND_URL}/twins", params=params)
         res.raise_for_status()
-        twins = res.json()
+        twins = res.json().get("twins", [])
 
         if not twins:
             st.warning("No cognitive twins match the selected filters.")
