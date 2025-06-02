@@ -5,6 +5,12 @@ import pandas as pd
 
 BACKEND_URL = "https://cogniscent-backend-ygrv.onrender.com"
 
+def get_top_neuro_summary(neuro_dict):
+    if not isinstance(neuro_dict, dict) or not neuro_dict:
+        return ""
+    top2 = sorted(neuro_dict.items(), key=lambda x: x[1], reverse=True)[:2]
+    return " | ".join([f"{k}:{v:.2f}" for k, v in top2])
+
 def main():
     st.title("📚 Cognitive Twin Explorer")
 
@@ -27,7 +33,6 @@ def main():
     if gender: params["gender"] = gender
     if life_stage: params["life_stage"] = life_stage
     if age_range: params["age_range"] = age_range
-    if ethnicity: params["ethnicity"] = ethnicity
     if limit: params["limit"] = limit
 
     # === Load from API ===
@@ -45,10 +50,12 @@ def main():
             df["timestamp"] = "unknown"
         df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
         df = df.sort_values(by="timestamp", ascending=False)
+        
+        df["top_neurotransmitters"] = df["neurotransmitters"].apply(get_top_neuro_summary)
 
         st.success(f"Loaded {len(df)} matching twins")
 
-        st.dataframe(df[["name", "gender", "life_stage", "age_range", "ethnicity", "timestamp", "vector_id"]])
+        st.dataframe(df[["name", "gender", "life_stage", "age_range", "top_neurotransmitters", "timestamp", "vector_id"]])
 
         csv = df.to_csv(index=False)
         st.download_button("📥 Download CSV", data=csv, file_name="filtered_twins.csv", mime="text/csv")
