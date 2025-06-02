@@ -7,7 +7,7 @@ def main():
     st.title("🪞 Reflection Journal")
     st.markdown("Let NeuroSync help you process your thoughts with AI-powered journaling ✨")
 
-    # Load prior twin
+
     twin_data = st.session_state.get("profile")
     journal_history = st.session_state.get("journal_history", [])
 
@@ -60,7 +60,7 @@ def main():
             st.error(f"Request failed: {e}")
 
 
-    # Show history
+
     if journal_history:
         st.markdown("## 🧾 Past Reflections")
         for j in reversed(journal_history):
