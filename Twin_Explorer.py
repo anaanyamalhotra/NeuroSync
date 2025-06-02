@@ -6,17 +6,20 @@ import ast
 
 BACKEND_URL = "https://cogniscent-backend-ygrv.onrender.com"
 
-def get_top_neuro_summary(twin):
-    try:
-        nt_dict = twin.get("twin_vector", {}).get("neurotransmitters", {})
-        if isinstance(nt_dict, str):
-            nt_dict = ast.literal_eval(nt_dict)
-        if not isinstance(nt_dict, dict):
-            return "N/A"
-        top2 = sorted(nt_dict.items(), key=lambda x: x[1], reverse=True)[:2]
-        return " | ".join([f"{k}:{v:.2f}" for k, v in top2])
-    except Exception as e:
-        return f"Error: {e}"
+def get_top_nts(neuro_dict, top_n=2):
+    if isinstance(neuro_dict, dict):
+        sorted_nts = sorted(neuro_dict.items(), key=lambda x: x[1], reverse=True)
+        return ", ".join([f"{k} ({v:.2f})" for k, v in sorted_nts[:top_n]])
+    return ""
+
+if "neurotransmitters" in df.columns:
+    df["top_neurotransmitters"] = df["neurotransmitters"].apply(get_top_nts)
+elif "twin_vector" in df.columns:
+    df["top_neurotransmitters"] = df["twin_vector"].apply(
+        lambda twin: get_top_nts(twin.get("neurotransmitters", {})) if isinstance(twin, dict) else ""
+    )
+else:
+    df["top_neurotransmitters"] = ""
 
 def main():
     st.title("📚 Cognitive Twin Explorer")
