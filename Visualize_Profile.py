@@ -134,7 +134,7 @@ def main():
                             for note in circadian_notes:
                                 st.markdown(f"✅ {note}")
                         else:
-                            st.markdown("No circadian disruption detected.")
+                            st.markdown("✅ Circadian rhythm appears balanced based on your current profile.")
 
                     st.subheader("Brain Region Scores")
                     brain_region_df = pd.DataFrame.from_dict(profile["brain_regions"], orient="index", columns=["Score"])
