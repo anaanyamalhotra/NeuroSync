@@ -2,14 +2,21 @@
 import streamlit as st
 import requests
 import pandas as pd
+import ast
 
 BACKEND_URL = "https://cogniscent-backend-ygrv.onrender.com"
 
-def get_top_neuro_summary(neuro_dict):
-    if not isinstance(neuro_dict, dict):
-        return "N/A"
-    top2 = sorted(neuro_dict.items(), key=lambda x: x[1], reverse=True)[:2]
-    return " | ".join([f"{k}:{v:.2f}" for k, v in top2])
+def get_top_neuro_summary(twin):
+    try:
+        nt_dict = twin.get("twin_vector", {}).get("neurotransmitters", {})
+        if isinstance(nt_dict, str):
+            nt_dict = ast.literal_eval(nt_dict)
+        if not isinstance(nt_dict, dict):
+            return "N/A"
+        top2 = sorted(nt_dict.items(), key=lambda x: x[1], reverse=True)[:2]
+        return " | ".join([f"{k}:{v:.2f}" for k, v in top2])
+    except Exception as e:
+        return f"Error: {e}"
 
 def main():
     st.title("📚 Cognitive Twin Explorer")
@@ -50,7 +57,7 @@ def main():
         df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
         df = df.sort_values(by="timestamp", ascending=False)
         
-        df["top_neurotransmitters"] = df.get("neurotransmitters", pd.Series([{}]*len(df))).apply(get_top_neuro_summary)
+        df["top_neurotransmitters"] = df.apply(get_top_neuro_summary, axis=1)
 
         st.success(f"Loaded {len(df)} matching twins")
 
