@@ -29,6 +29,10 @@ streamlit run app.py
 - Deploy on [Streamlit Cloud](https://share.streamlit.io/)
 - Update `BACKEND_URL` inside the `.py` files to match your FastAPI backend (e.g., https://cogniscent-backend.onrender.com)
 
+## Live Demo
+- 🌐 Frontend App: [https://neurosync-ananya.streamlit.app/](https://neurosync-ananya.streamlit.app/)
+- 🧠 Backend API: [https://cogniscent-backend-ygrv.onrender.com](https://cogniscent-backend-ygrv.onrender.com)
+
 ## How It Works
 1. User fills out a 7-question form
 2. Data is sent to the FastAPI backend
