@@ -216,6 +216,16 @@ def main():
                     st.markdown(f"Try using **{profile['scent_reinforcement']}** today to support your mental balance.")
                     st.subheader("🕒 Circadian Rhythm & Scent Guidance")
 
+                    if circadian_window:
+                        st.markdown(f"**Detected Activity Window:** {circadian_window.title()}")
+                    else:
+                        st.markdown("No circadian rhythm detected.")
+                    if user_scent:
+                        if circadian_window == "morning" and user_scent in nighttime_scents:
+                            st.info("🌞 Morning tip: Your chosen scent may be better suited for evening relaxation. Try energizing options like citrus or mint.")
+                        elif circadian_window == "evening" and user_scent in daytime_scents:
+                            st.info("🌙 Evening tip: Your chosen scent is stimulating. For better sleep-wake rhythm, try calming scents like lavender or vanilla.")
+
                     if "memory_scent_profile" in profile:
                         st.subheader("🧸 Childhood Memory Scent Profile")
                         memory = profile["memory_scent_profile"]
@@ -248,10 +258,7 @@ def main():
                     daytime_scents = ["citrus", "mint", "bergamot", "linalool"]
                     nighttime_scents = ["lavender", "rose", "vanilla", "tonka bean"]
 
-                    if circadian_window == "morning" and user_scent in nighttime_scents:
-                        st.info("🌞 Morning tip: Your chosen scent may be better suited for evening relaxation. Try energizing options like citrus or mint.")
-                    elif circadian_window == "evening" and user_scent in daytime_scents:
-                        st.info("🌙 Evening tip: Your chosen scent is stimulating. For better sleep-wake rhythm, try calming scents like lavender or vanilla.")
+                    
 
                     region_explanations = {
                         "amygdala": "Lavender may reduce hyperactivity here by increasing GABA and decreasing cortisol.",
