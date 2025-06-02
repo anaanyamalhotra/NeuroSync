@@ -120,34 +120,9 @@ def main():
 
                     st.success("Cognitive Twin Generated Successfully!")
                     if "cognitive_focus" in profile:
-                        st.subheader("🧠 Primary Cognitive Role")
-                        st.markdown(f"**Focus:** {profile['cognitive_focus']}")
-                        st.markdown("**Confidence Level:**")
-                        st.progress(profile.get("cognitive_focus_confidence", 50))
+                        st.subheader("🧠 Cognitive Focus")
+                        st.markdown(f"**Primary Cognitive Role Based on Brain Activity:** _{profile['cognitive_focus']}_")
                         
-                        focus_explanation = {
-                            "💓 Emotional Analyst": "Strong emotional regulation and empathy, likely high oxytocin/amygdala activity.",
-                            "📚 Memory-Oriented Thinker": "Excellent at recalling and organizing complex information.",
-                            "🧘‍♀️ Stress Regulator": "Balanced neural state with effective stress coping strategies.",
-                            "🧠 Strategic Thinker": "High prefrontal cortex activation—great at planning, decision-making, and reasoning.",
-                            "⚖️ Cognitive Synthesizer": "Evenly distributed cognitive activity across brain regions."
-                        }
-                        explanation = focus_explanation.get(profile["cognitive_focus"], "")
-                        if explanation:
-                            st.markdown(f"> {explanation}")
-                        genre_map = {
-                            "💓 Emotional Analyst": ["Narrative-driven games", "Emotional RPGs", "Cozy simulators"],
-                            "📚 Memory-Oriented Thinker": ["Puzzle games", "Mystery adventures", "Story recall games"],
-                            "🧘‍♀️ Stress Regulator": ["Relaxation games", "Zen puzzles", "Ambient exploration"],
-                            "🧠 Strategic Thinker": ["Turn-based strategy", "Simulation games", "Resource management"],
-                            "⚖️ Cognitive Synthesizer": ["Balanced challenges", "Hybrid genre games", "Experimental games"]
-                        }
-                        suggested_genres = genre_map.get(profile["cognitive_focus"], [])
-                        if suggested_genres:
-                            st.markdown("**🎮 Suggested Game Types for You:**")
-                            st.markdown(", ".join(f"`{genre}`" for genre in suggested_genres))
-
-                    
                     st.subheader("Neurotransmitter Levels")
                     st.json(profile["neurotransmitters"])
                     if "circadian_window" in profile or "circadian_note" in profile:
@@ -404,3 +379,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
