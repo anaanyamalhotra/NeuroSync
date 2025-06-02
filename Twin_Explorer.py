@@ -6,8 +6,8 @@ import pandas as pd
 BACKEND_URL = "https://cogniscent-backend-ygrv.onrender.com"
 
 def get_top_neuro_summary(neuro_dict):
-    if not isinstance(neuro_dict, dict) or not neuro_dict:
-        return ""
+    if not isinstance(neuro_dict, dict):
+        return "N/A"
     top2 = sorted(neuro_dict.items(), key=lambda x: x[1], reverse=True)[:2]
     return " | ".join([f"{k}:{v:.2f}" for k, v in top2])
 
@@ -25,7 +25,6 @@ def main():
     gender = st.sidebar.selectbox("Gender", ["", "male", "female", "neutral"])
     life_stage = st.sidebar.selectbox("Life Stage", ["", "young_adult", "adult", "senior"])
     age_range = st.sidebar.selectbox("Age Range", ["", "18-25", "25-40", "60+"])
-    ethnicity = st.sidebar.selectbox("Ethnicity", ["", "South Asian", "Latinx", "East Asian", "Western", "Other", "Uncategorized"])
     limit = st.sidebar.slider("Limit Results", 1, 100, 25)
 
     # === Build query params ===
@@ -51,7 +50,7 @@ def main():
         df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
         df = df.sort_values(by="timestamp", ascending=False)
         
-        df["top_neurotransmitters"] = df["neurotransmitters"].apply(get_top_neuro_summary)
+        df["top_neurotransmitters"] = df.get("neurotransmitters", pd.Series([{}]*len(df))).apply(get_top_neuro_summary)
 
         st.success(f"Loaded {len(df)} matching twins")
 
