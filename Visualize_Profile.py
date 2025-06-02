@@ -215,6 +215,10 @@ def main():
                     st.subheader("🌿 Olfactory Suggestion")
                     st.markdown(f"Try using **{profile['scent_reinforcement']}** today to support your mental balance.")
                     st.subheader("🕒 Circadian Rhythm & Scent Guidance")
+                    circadian_window = profile.get("circadian_window", "")
+                    user_scent = profile.get("scent_note", "").lower().strip()
+                    daytime_scents = ["citrus", "mint", "bergamot", "linalool"]
+                    nighttime_scents = ["lavender", "rose", "vanilla", "tonka bean"]
 
                     if circadian_window:
                         st.markdown(f"**Detected Activity Window:** {circadian_window.title()}")
@@ -252,11 +256,6 @@ def main():
 
                     
                     
-
-                    circadian_window = profile.get("circadian_window", "")
-                    user_scent = profile.get("scent_note", "").lower().strip()
-                    daytime_scents = ["citrus", "mint", "bergamot", "linalool"]
-                    nighttime_scents = ["lavender", "rose", "vanilla", "tonka bean"]
 
                     
 
