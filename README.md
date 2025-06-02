@@ -46,4 +46,4 @@ streamlit run app.py
 - Scent Reinforcement: Linalool or Vanilla
 
 ## Author
-Developed as part of the NeuroSync Technical Packet submission.
+Ananya Malhotra
