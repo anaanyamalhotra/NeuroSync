@@ -3,7 +3,7 @@ import importlib
 
 st.set_page_config(page_title="NeuroSync", layout="wide")
 
-# Map sidebar titles to file/module names (without .py)
+
 PAGES = {
     "🏠 Home": "home",
     "🧬 Visualize NeuroProfile": "Visualize_Profile",
@@ -11,7 +11,7 @@ PAGES = {
     
 }
 
-# Sidebar navigation
+
 st.sidebar.title("🧠 NeuroSync Navigation")
 selection = st.sidebar.radio("Go to", list(PAGES.keys()))
 
