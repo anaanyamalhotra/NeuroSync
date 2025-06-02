@@ -14,10 +14,10 @@ def sanitize_neuro(nt_dict):
         try:
             clean_nt[k] = float(v)
         except (ValueError, TypeError):
-            clean_nt[k] = 0.5  # default fallback
+            clean_nt[k] = 0.5  
     return clean_nt
     
-# === Load game profile database ===
+
 with open(os.path.join(os.path.dirname(__file__), "game_profiles.json"), "r") as f:
     game_profiles = json.load(f)
 
