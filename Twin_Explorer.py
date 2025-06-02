@@ -6,21 +6,6 @@ import ast
 
 BACKEND_URL = "https://cogniscent-backend-ygrv.onrender.com"
 
-def get_top_nts(neuro_dict, top_n=2):
-    if isinstance(neuro_dict, dict):
-        sorted_nts = sorted(neuro_dict.items(), key=lambda x: x[1], reverse=True)
-        return ", ".join([f"{k} ({v:.2f})" for k, v in sorted_nts[:top_n]])
-    return ""
-
-if "neurotransmitters" in df.columns:
-    df["top_neurotransmitters"] = df["neurotransmitters"].apply(get_top_nts)
-elif "twin_vector" in df.columns:
-    df["top_neurotransmitters"] = df["twin_vector"].apply(
-        lambda twin: get_top_nts(twin.get("neurotransmitters", {})) if isinstance(twin, dict) else ""
-    )
-else:
-    df["top_neurotransmitters"] = ""
-
 def main():
     st.title("📚 Cognitive Twin Explorer")
 
@@ -59,8 +44,23 @@ def main():
             df["timestamp"] = "unknown"
         df["timestamp"] = pd.to_datetime(df["timestamp"], errors="coerce")
         df = df.sort_values(by="timestamp", ascending=False)
+
+        def get_top_nts(neuro_dict, top_n=2):
+            if isinstance(neuro_dict, dict):
+                sorted_nts = sorted(nt_dict.items(), key=lambda x: x[1], reverse=True)
+                return ", ".join([f"{k} ({v:.2f})" for k, v in sorted_nts[:top_n]])
+            return ""
+
+        if "neurotransmitters" in df.columns:
+            df["top_neurotransmitters"] = df["neurotransmitters"].apply(get_top_nts)
+        elif "twin_vector" in df.columns:
+            df["top_neurotransmitters"] = df["twin_vector"].apply(
+                lambda twin: get_top_nts(twin.get("neurotransmitters", {})) if isinstance(twin, dict) else ""
+            )
+        else:
+            df["top_neurotransmitters"] = ""
         
-        df["top_neurotransmitters"] = df.apply(get_top_neuro_summary, axis=1)
+        
 
         st.success(f"Loaded {len(df)} matching twins")
 
